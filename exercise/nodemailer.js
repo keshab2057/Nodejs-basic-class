@@ -28,6 +28,12 @@ const sendMail = async (html) => {
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html, // html body
+    attachments: [
+      {   // utf-8 string as an attachment
+          filename: 'text1.txt',
+          content: 'hello world!'
+      },
+    ],
   };
   const result = await transporter.sendMail(message);
   return result.messageId;
