@@ -12,28 +12,23 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "keshabsingh981829@gmail.com",
-    pass: "jnizbssyqneawifg",
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
   },
   tls: {
     rejectUnauthorized: false,
   },
 });
 
-const sendMail = async (html) => {
+const sendMail = async ({ from, to, subject, text, html, attachments }) => {
   //setup message
   const message = {
-    from: '"Fred Foo 👻" <keshabsingh981829@gmail.com>', // sender address
-    to: "sutarkeshab123@gmail.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
+    from, // sender address
+    to, // list of receivers
+    subject, // Subject line
+    text, // plain text body
     html, // html body
-    attachments: [
-      {   // utf-8 string as an attachment
-          filename: 'text1.txt',
-          content: 'hello world!'
-      },
-    ],
+    attachments: [...attachments],
   };
   const result = await transporter.sendMail(message);
   return result.messageId;
